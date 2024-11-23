@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Image Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1f1f2e, #262645);
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background-color: #00d4ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #009ec1;
+        }
+
+        .image-display {
+            margin-top: 2rem;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .loading {
+            display: none;
+            margin-top: 1.5rem;
+            color: #00d4ff;
+            font-size: 1.2rem;
+        }
+
+        .download-button {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background-color: #009ec1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Text-to-Image Generator</h1>
+        <form method="POST" onsubmit="showLoading()">
+            <div class="input-group">
+                <input type="text" id="prompt" name="prompt" placeholder="Enter a description, e.g., 'Astronaut riding a horse'" required>
+            </div>
+            <button type="submit">Generate Image</button>
+        </form>
+
+        <!-- Loading indicator -->
+        <div class="loading" id="loading">Generating image, please wait...</div>
+
+        <div class="image-display" id="imageDisplay">
+            {% if image_data %}
+                <h2>Generated Image</h2>
+                <img src="{{ image_data }}" alt="Generated Image" id="generatedImage">
+                <a href="{{ image_data }}" download="generated_image.png" class="download-button" id="downloadButton">Download Image</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Show loading text when form is submitted
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("imageDisplay").style.display = "none";
+        }
+
+        // Hide loading text and show image on page load
+        window.addEventListener("load", function() {
+            const imageData = "{{ image_data }}";
+            if (imageData) {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("imageDisplay").style.display = "block";
+                document.getElementById("downloadButton").style.display = "inline-block";
+            }
+        });
+    </script>
+
+</body>
+</html>
