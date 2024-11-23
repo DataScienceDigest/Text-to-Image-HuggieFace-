@@ -9,7 +9,7 @@ import requests
 
 
 API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-3.5-large"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer entertokenhere"}
 
 
 app = Flask(__name__)
